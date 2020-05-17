@@ -3,37 +3,54 @@ function breadthFirstSearch_init()
     G = map();                          % Load map for searching
     p = plot(G);                        % Plot mat
     %init = 'Wausau'; goal = 'Grand Forks';
-    init = 'Milwaukee'; goal = 'Grand Forks';
+    %init = 'Milwaukee'; goal = 'Grand Forks';
+    init = 'Sioux Falls'; goal = 'Minneapolis';    
     [queue, explored, ruta] = BFS(G.Edges, init, goal)
-    [C, ia, ic]=unique(ruta,'stable');
-    a_counts = accumarray(ic,1);    
-    nr=max(a_counts);
-    sr=size(ruta);
-    if nr>1
-        fn=find(a_counts==nr)
-        vc = [];
-        for j=1:(size(ic))
-            if ic(j)==fn
-                vc(end+1)=j;
+    while 1
+        [C, ia, ic]=unique(ruta,'stable');
+        a_counts = accumarray(ic,1)
+        nr=max(a_counts);
+        sr=size(ruta);
+        if nr>1
+            fn=find(a_counts==nr)
+            vc = [];
+            for j=1:(size(ic))
+                if ic(j)==fn
+                    vc(end+1)=j;
+                end
             end
+            for k=1:sr(2)
+                k
+                if k>=min(vc) && k<max(vc)
+                    ruta{1,k} = '';
+                end                
+            end
+            i=1
+            while 1
+                if strcmp(ruta{1,i}, '')
+                    ne = i
+                    break
+                end
+                i=i+1;
+            end
+            while strcmp(ruta{1,ne}, '')
+                ruta(:,ne) = []
+            end
+            ruta
+        else
+            %vc
+            C
+            disp(a_counts)
+            ruta
+            break
         end
-        for k=1:sr(2)
-            if k>=min(vc) && k<max(vc)
-                ruta{1,k} = '';
-            end                
-        end
-        while strcmp(ruta{1,fn}, '')
-            ruta(:,fn) = []
-        end        
+            
+        %value_counts = [ruta, a_counts]
+
+    %     ic
+    %     size(ic)
+    [C, ia, ic]=unique(ruta,'stable');
     end
-    vc
-    C
-    disp(a_counts)
-    ruta
-    %value_counts = [ruta, a_counts]
-    
-%     ic
-%     size(ic)
 end
 
 function [searchNode, explored, ruta] = BFS(T, init, goal)  
