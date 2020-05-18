@@ -82,7 +82,7 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
     szo = sz(2);
     h = 1;
     while h == 1
-        for c = 1 : 2
+        %for c = 1 : 2
             for r = 1 : szo
                 if strcmp(final, explored{1,r})               
                     ruta{end+1} = explored{1,r}
@@ -97,7 +97,7 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
             if h == 0
                 break
             end
-        end
+        %end
         if h == 0
             break
         end
