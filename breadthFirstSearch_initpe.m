@@ -4,7 +4,8 @@ function breadthFirstSearch_init()
     p = plot(G);                        % Plot mat
     %init = 'Wausau'; goal = 'Grand Forks';
     %init = 'Milwaukee'; goal = 'Grand Forks';
-    init = 'Sioux Falls'; goal = 'Minneapolis';    
+    %init = 'Sioux Falls'; goal = 'Minneapolis';    
+    init = 'Fargo'; goal = 'Rockford';
     [queue, explored, ruta] = BFS(G.Edges, init, goal)
     while 1
         [C, ia, ic]=unique(ruta,'stable');
@@ -82,15 +83,14 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
     while h == 1
         for c = 1 : 2
             for r = 1 : szo
-                %final
-                %explored{1,r}
                 if strcmp(final, explored{1,r})               
-                    ruta{end+1} = explored{1,r};
+                    ruta{end+1} = explored{1,r}
                     final =explored{2,r};
                     if strcmp(init, ruta(end))                        
                         h=0;
                         break
                     end
+                    break
                 end
             end
             if h == 0
