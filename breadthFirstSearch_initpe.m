@@ -3,56 +3,11 @@ function breadthFirstSearch_init()
     G = map();                          % Load map for searching
     p = plot(G);                        % Plot mat
     %init = 'Wausau'; goal = 'Grand Forks';
-    init = 'Milwaukee'; goal = 'Grand Forks';
+    %init = 'Milwaukee'; goal = 'Grand Forks';
     %init = 'Sioux Falls'; goal = 'Minneapolis';    
     %init = 'Fargo'; goal = 'Rockford';
-    %init = 'Fargo'; goal = 'Rockford';
+    init = 'Fargo'; goal = 'Rockford';
     [queue, explored, ruta] = BFS(G.Edges, init, goal)
-%     while 1
-%         [C, ia, ic]=unique(ruta,'stable');
-%         a_counts = accumarray(ic,1)
-%         nr=max(a_counts);
-%         sr=size(ruta);
-%         if nr>1
-%             fn=find(a_counts==nr)
-%             vc = [];
-%             for j=1:(size(ic))
-%                 if ic(j)==fn
-%                     vc(end+1)=j;
-%                 end
-%             end
-%             for k=1:sr(2)
-%                 k
-%                 if k>=min(vc) && k<max(vc)
-%                     ruta{1,k} = '';
-%                 end                
-%             end
-%             i=1
-%             while 1
-%                 if strcmp(ruta{1,i}, '')
-%                     ne = i
-%                     break
-%                 end
-%                 i=i+1;
-%             end
-%             while strcmp(ruta{1,ne}, '')
-%                 ruta(:,ne) = []
-%             end
-%             ruta
-%         else
-%             %vc
-%             C
-%             disp(a_counts)
-%             ruta
-%             break
-%         end
-%             
-%         %value_counts = [ruta, a_counts]
-% 
-%     %     ic
-%     %     size(ic)
-%     [C, ia, ic]=unique(ruta,'stable');
-%     end
 end
 
 function [searchNode, explored, ruta] = BFS(T, init, goal)  
@@ -82,22 +37,17 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
     szo = sz(2);
     h = 1;
     while h == 1
-        %for c = 1 : 2
-            for r = 1 : szo
-                if strcmp(final, explored{1,r})               
-                    ruta{end+1} = explored{1,r}
-                    final =explored{2,r};
-                    if strcmp(init, ruta(end))                        
-                        h=0;
-                        break
-                    end
+        for r = 1 : szo
+            if strcmp(final, explored{1,r})               
+                ruta{end+1} = explored{1,r};
+                final =explored{2,r};
+                if strcmp(init, ruta(end))                        
+                    h=0;
                     break
                 end
-            end
-            if h == 0
                 break
             end
-        %end
+        end
         if h == 0
             break
         end
