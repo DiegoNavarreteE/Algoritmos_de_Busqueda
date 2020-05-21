@@ -1,0 +1,2 @@
+variable vacia
+isempty(find(char(searchNode{2,end})==currentNode))
