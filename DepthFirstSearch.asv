@@ -2,7 +2,7 @@ function breadthFirstSearch_init()
     clc; clear; close all;              % Clear screen and variables
     G = map();                          % Load map for searching
     p = plot(G);                        % Plot mat
-    init = 'Milwaukee'; goal = 'Grand Forks';
+    init = 'Grand Forks'; goal = 'Dubuque';
     [queue, explored, ruta] = BFS(G.Edges, init, goal)
 
 end
@@ -12,7 +12,7 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
     explored = {};
     N = size(T,1);
     ind = [1 2; 2 1];
-    currentNode = 's'
+    currentNode = 's';
     G=1;
     searchNode{2,1} = '';
     while ~strcmp(searchNode{1,1}, goal) | isempty(searchNode)
@@ -20,17 +20,32 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
         flag1 = true;
         for i = 1 : 2
             for j = 1 : N
+                isempty(explored)
                 start = T(j,1).EndNodes{ind(1,i)}
                 end1 = T(j,1).EndNodes{ind(2,i)}
-                if isempty(explored) || ~strcmp(currentNode,searchNode{2,1})
-                    G = 1;
+                if(isempty(explored))
+                    if isempty(explored) || ~strcmp(end1,explored{1,end})
+                        G = 1;
+                    else
+                        G = 0;
+                    end
                 else
-                    G = 0;
+                    sz =size(explored);
+                    szo = sz(2);
+                    for k = 1 : szo
+                        explored{1,k}
+                        if ~strcmp(end1,explored{1,k})
+                            G = 1;
+                        else
+                            G = 0;
+                            break
+                        end
+                    end
                 end
                 if strcmp(currentNode, T(j,1).EndNodes{ind(1,i)}) && G
                     searchNode{1,end+1} = T(j,1).EndNodes{ind(2,i)};
                     searchNode{2,end} = currentNode;   
-                    flag1 = false;
+                    %flag1 = false;
                     break                        
                 end                
                 if flag1 == false
@@ -44,7 +59,7 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
         explored{1,end+1} = char(searchNode{1,1});
         explored{2,end} = char(searchNode{2,1});
         searchNode(:,1) = [];
-        explored{1,end}        
+        explored{1,end}
         
     end
     explored{1,end+1} = goal;
