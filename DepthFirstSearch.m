@@ -46,16 +46,16 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
                 if strcmp(currentNode, T(j,1).EndNodes{ind(1,i)}) && G
                     searchNode{1,end+1} = T(j,1).EndNodes{ind(2,i)};
                     searchNode{2,end} = currentNode;   
-                    %flag1 = false;
-                    %break                        
+                    flag1 = false;
+                    break                        
                 end                
-%                 if flag1 == false
-%                     break
-%                 end                
+                 if flag1 == false
+                     break
+                 end                
             end
-%             if flag1 == false
-%                 break
-%             end 
+             if flag1 == false
+                 break
+             end 
         end
         explored{1,end+1} = char(searchNode{1,1});
         explored{2,end} = char(searchNode{2,1});

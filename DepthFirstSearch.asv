@@ -2,7 +2,9 @@ function breadthFirstSearch_init()
     clc; clear; close all;              % Clear screen and variables
     G = map();                          % Load map for searching
     p = plot(G);                        % Plot mat
-    init = 'Grand Forks'; goal = 'Dubuque';
+    %init = 'Grand Forks'; goal = 'Dubuque';
+    %init = 'Milwaukee'; goal = 'Grand Forks';
+    init = 'Minneapolis'; goal = 'Madison';    
     [queue, explored, ruta] = BFS(G.Edges, init, goal)
 
 end
@@ -20,9 +22,8 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
         flag1 = true;
         for i = 1 : 2
             for j = 1 : N
-                isempty(explored)
-                start = T(j,1).EndNodes{ind(1,i)}
-                end1 = T(j,1).EndNodes{ind(2,i)}
+                start = T(j,1).EndNodes{ind(1,i)};
+                end1 = T(j,1).EndNodes{ind(2,i)};
                 if(isempty(explored))
                     if isempty(explored) || ~strcmp(end1,explored{1,end})
                         G = 1;
@@ -46,15 +47,15 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
                     searchNode{1,end+1} = T(j,1).EndNodes{ind(2,i)};
                     searchNode{2,end} = currentNode;   
                     %flag1 = false;
-                    break                        
+                    %break                        
                 end                
-                if flag1 == false
-                    break
-                end                
+                 if flag1 == false
+                     break
+                 end                
             end
-            if flag1 == false
-                break
-            end 
+             if flag1 == false
+                 break
+             end 
         end
         explored{1,end+1} = char(searchNode{1,1});
         explored{2,end} = char(searchNode{2,1});
