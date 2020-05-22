@@ -4,7 +4,7 @@ function breadthFirstSearch_init()
     p = plot(G);                        % Plot mat
     %init = 'Grand Forks'; goal = 'Dubuque';
     %init = 'Milwaukee'; goal = 'Grand Forks';
-    init = 'Minneapolis'; goal = 'Madison';    
+    init = 'Bemidji'; goal = 'Sioux Falls';    
     [queue, explored, ruta] = BFS(G.Edges, init, goal)
 
 end
@@ -12,6 +12,7 @@ end
 function [searchNode, explored, ruta] = BFS(T, init, goal)  
     searchNode{1,1} = {init};
     explored = {};
+    comeback = {};
     N = size(T,1);
     ind = [1 2; 2 1];
     currentNode = 's';
@@ -22,8 +23,8 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
         flag1 = true;
         for i = 1 : 2
             for j = 1 : N
-                start = T(j,1).EndNodes{ind(1,i)};
-                end1 = T(j,1).EndNodes{ind(2,i)};
+                start = T(j,1).EndNodes{ind(1,i)}
+                end1 = T(j,1).EndNodes{ind(2,i)}
                 if(isempty(explored))
                     if isempty(explored) || ~strcmp(end1,explored{1,end})
                         G = 1;
@@ -34,20 +35,24 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
                     sz =size(explored);
                     szo = sz(2);
                     for k = 1 : szo
-                        explored{1,k}
+                        explored{1,k};
                         if ~strcmp(end1,explored{1,k})
-                            G = 1;
+                            G = 1;                            
                         else
                             G = 0;
                             break
                         end
                     end
                 end
+                if ~isempty(comeback)&&strcmp(end1,comeback{1,end})
+                    G = 0;
+                    searchNode(:,1) = [];
+                end
                 if strcmp(currentNode, T(j,1).EndNodes{ind(1,i)}) && G
                     searchNode{1,end+1} = T(j,1).EndNodes{ind(2,i)};
                     searchNode{2,end} = currentNode;   
-                    %flag1 = false;
-                    %break                        
+                    flag1 = false;
+                    break                        
                 end                
                  if flag1 == false
                      break
@@ -60,8 +65,17 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
         explored{1,end+1} = char(searchNode{1,1});
         explored{2,end} = char(searchNode{2,1});
         searchNode(:,1) = [];
-        explored{1,end}
-        
+        explored{1,end}        
+        if isempty(searchNode)
+            comeback{1,end+1} = explored{1,end}
+            searchNode{1,1} = explored{1,end};
+            searchNode{2,1} = explored{2,end};
+            explored(:,end) = [];
+            disp("Ruta no encontrada regresando")
+        end
+    end    
+    if isempty(searchNode)        
+        disp("Ruta no encontrada")
     end
     explored{1,end+1} = goal;
     explored{2,end} = searchNode{2,1};
@@ -73,7 +87,7 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
     while flag == true
             for r = 1 : szo
                 if strcmp(final, explored{1,r})               
-                    ruta{end+1} = explored{1,r}
+                    ruta{end+1} = explored{1,r};
                     final =explored{2,r};
                     if strcmp(init, ruta(end))                        
                         flag=false;
