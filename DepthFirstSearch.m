@@ -4,7 +4,8 @@ function breadthFirstSearch_init()
     p = plot(G);                        % Plot mat
     %init = 'Grand Forks'; goal = 'Dubuque';
     %init = 'Milwaukee'; goal = 'Grand Forks';
-    init = 'Bemidji'; goal = 'Sioux Falls';    
+    %init = 'Minneapolis'; goal = 'Sioux Falls';
+    init = 'Fargo'; goal = 'Green Bay';
     [queue, explored, ruta] = BFS(G.Edges, init, goal)
 
 end
@@ -44,8 +45,17 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
                         end
                     end
                 end
-                if ~isempty(comeback)&&strcmp(end1,comeback{1,end})
-                    G = 0;
+                if ~isempty(comeback)
+                    szc =size(comeback);
+                    szc2 = szc(2);
+                    for y = 1:szc2
+                        if strcmp(end1,comeback{1,y})
+                            G = 0;
+                            if ~isempty(searchNode)
+                                searchNode(:,1) = [];
+                            end
+                        end
+                    end
                 end
                 if strcmp(currentNode, T(j,1).EndNodes{ind(1,i)}) && G
                     searchNode{1,end+1} = T(j,1).EndNodes{ind(2,i)};
@@ -61,14 +71,22 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
                  break
              end 
         end
-        explored{1,end+1} = char(searchNode{1,1});
-        explored{2,end} = char(searchNode{2,1});
-        searchNode(:,1) = [];
-        explored{1,end}        
-        if isempty(searchNode)
+        if ~isempty(searchNode)
+            if isempty(comeback)
+                explored{1,end+1} = char(searchNode{1,1});
+                explored{2,end} = char(searchNode{2,1});
+                searchNode(:,1) = [];
+                explored{1,end}
+            else
+                explored{1,end+1} = char(comeback{1,end});
+                explored{2,end} = char(explored{1,end-1});
+                explored{1,end}                
+            end
+        end
+        if isempty(searchNode)&&~strcmp(explored{1,end},goal)
             comeback{1,end+1} = explored{1,end}
-            %searchNode{1,1} = explored{1,end};
-            %searchNode{2,1} = explored{2,end};
+            searchNode{1,1} = explored{1,end};
+            searchNode{2,1} = explored{2,end};
             explored(:,end) = [];
             disp("Ruta no encontrada regresando")
         end
