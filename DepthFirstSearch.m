@@ -24,8 +24,8 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
         flag1 = true;
         for i = 1 : 2
             for j = 1 : N
-                start = T(j,1).EndNodes{ind(1,i)}
-                end1 = T(j,1).EndNodes{ind(2,i)}
+                start = T(j,1).EndNodes{ind(1,i)};
+                end1 = T(j,1).EndNodes{ind(2,i)};
                 if(isempty(explored))
                     if isempty(explored) || ~strcmp(end1,explored{1,end})
                         G = 1;
@@ -76,12 +76,9 @@ function [searchNode, explored, ruta] = BFS(T, init, goal)
                 explored{1,end+1} = char(searchNode{1,1});
                 explored{2,end} = char(searchNode{2,1});
                 searchNode(:,1) = [];
-                explored{1,end}
             else
                 explored{1,end+1} = char(comeback{1,end});
-                explored{2,end} = char(explored{1,end-1});
-                explored{1,end}                
-            end
+                explored{2,end} = char(explored{1,end-1});            end
         end
         if isempty(searchNode)&&~strcmp(explored{1,end},goal)
             comeback{1,end+1} = explored{1,end}
